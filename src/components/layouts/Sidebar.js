@@ -18,6 +18,7 @@ import {
   UserPlus as UserPlusIcon,
   Users as UsersIcon,
 } from "react-feather";
+
 import SidebarItem from "./SidebarItem";
 
 const items = [
