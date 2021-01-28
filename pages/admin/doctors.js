@@ -16,9 +16,9 @@ import {
   makeStyles,
 } from "@material-ui/core";
 
-import Admin from "../../layouts/Admin";
-import customers from "../../constants/doctors";
-import Toolbar from "../../components/common/Toolbar";
+import Admin from "@layouts/Admin";
+import customers from "@constants/doctors";
+import Toolbar from "@components/common/Toolbar";
 
 const useStyles = makeStyles((theme) => ({
   root: {},

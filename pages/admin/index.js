@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Grid } from "@material-ui/core";
 
-import Admin from "../../layouts/Admin";
-import TotalDoctors from "../../components/dashboard/TotalDoctors";
+import Admin from "@layouts/Admin";
+import TotalDoctors from "@components/dashboard/TotalDoctors";
 
 const index = () => {
   return (
