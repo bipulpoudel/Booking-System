@@ -9,17 +9,12 @@ const CustomButton = ({
   text,
   variant = "contained",
   color = "primary",
-  href = "/",
+  ...rest
 }) => {
   const router = useRouter();
   return (
-    <Button
-      variant={variant}
-      color={color}
-      disabled={loading}
-      onClick={() => router.push(href).then()}
-    >
-      {loading ? <CircularProgress size={25} /> : text}
+    <Button variant={variant} color={color} disabled={loading} {...rest}>
+      {loading ? <CircularProgress size={20} /> : text}
     </Button>
   );
 };

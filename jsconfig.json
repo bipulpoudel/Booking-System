@@ -5,7 +5,9 @@
       "@components/*": ["components/*"],
       "@layouts/*": ["layouts/*"],
       "@constants/*": ["constants/*"],
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["utils/*"],
+      "@redux/*": ["redux/*"],
+      "@config/*": ["config/*"]
     }
   }
 }
