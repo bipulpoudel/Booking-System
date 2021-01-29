@@ -64,6 +64,19 @@ const add = () => {
                 autoComplete="email"
               />
             </Grid>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="type"
+                name="type"
+                variant="outlined"
+                required
+                fullWidth
+                id="type"
+                label="Type of Doctor"
+                placeholder="Allergologist"
+                autoFocus
+              />
+            </Grid>
           </Grid>
           <Button
             type="submit"
