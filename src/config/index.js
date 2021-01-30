@@ -1,6 +1,6 @@
 export const API_URL =
   process.env.NODE_ENV === "production"
-    ? "https://booking-backend5.herokuapp.com/"
+    ? "https://booking-backend5.herokuapp.com"
     : "http://localhost:5000";
 
 export const getConfig = () => {
