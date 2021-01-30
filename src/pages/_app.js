@@ -44,9 +44,9 @@ function App({ Component, pageProps }) {
         >
           <Layout>
             <Component {...pageProps} />
-            <ToastContainer />
           </Layout>
         </PersistGate>
+        <ToastContainer />
       </ThemeProvider>
     </React.Fragment>
   );

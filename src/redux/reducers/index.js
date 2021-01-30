@@ -5,6 +5,7 @@ import { addDoctorReducer } from "./doctorReducer";
 //types
 import { USER_LOGOUT } from "@redux/types";
 import storage from "redux-persist/lib/storage";
+import { toast } from "react-toastify";
 
 const appReducer = combineReducers({
   userLogin: userLoginReducer,
@@ -15,6 +16,10 @@ const appReducer = combineReducers({
 //Root Reducer ot logout and cleat all the state from redux.
 const rootReducer = (state, action) => {
   if (action.type === USER_LOGOUT) {
+    localStorage.removeItem("token");
+
+    toast.success("Logged out successfully");
+
     storage.removeItem("persist:Pro");
     state = undefined;
   }
