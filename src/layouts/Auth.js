@@ -13,7 +13,16 @@ const Auth = (props) => {
   }
 
   if (isAuthenticated) {
-    return <Redirect to="/admin" />;
+    switch (user.role) {
+      case "admin":
+        return <Redirect to="/admin" />;
+
+      case "doctor":
+        return <Redirect to="/doctor" />;
+
+      default:
+        return <p>Not allowed user</p>;
+    }
   }
 
   return <>{props.children}</>;

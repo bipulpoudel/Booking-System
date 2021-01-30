@@ -6,8 +6,14 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
+//react hook form
+import { useForm } from "react-hook-form";
+//redux import
 import Admin from "@layouts/Admin";
+import { useDispatch, useSelector } from "react-redux";
+import { addDoctor } from "@redux/actions/doctorActions";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -16,12 +22,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -32,6 +34,16 @@ const useStyles = makeStyles((theme) => ({
 const add = () => {
   const classes = useStyles();
 
+  const dispatch = useDispatch();
+
+  const { isLoading } = useSelector((state) => state.addDoctor);
+
+  const { register, handleSubmit, errors: formErrors } = useForm();
+
+  const onSubmit = (data) => {
+    dispatch(addDoctor(data));
+  };
+
   return (
     <Container component="main" maxWidth="sm">
       <CssBaseline />
@@ -39,42 +51,35 @@ const add = () => {
         <Typography component="h1" variant="h5">
           Add Doctor
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
                 autoComplete="name"
                 name="name"
                 variant="outlined"
-                required
                 fullWidth
-                id="name"
                 label="Full Name"
                 autoFocus
+                inputRef={register({
+                  required: "Name is a required field",
+                })}
+                error={formErrors?.name && true}
+                helperText={formErrors?.name?.message}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
                 fullWidth
-                id="email"
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                autoComplete="type"
-                name="type"
-                variant="outlined"
-                required
-                fullWidth
-                id="type"
-                label="Type of Doctor"
-                placeholder="Allergologist"
-                autoFocus
+                inputRef={register({
+                  required: "Email is a required field",
+                })}
+                error={formErrors?.email && true}
+                helperText={formErrors?.email?.message}
               />
             </Grid>
           </Grid>
@@ -84,8 +89,9 @@ const add = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={isLoading}
           >
-            Sign Up
+            {isLoading ? <CircularProgress size={25} /> : "Add Doctor"}
           </Button>
         </form>
       </div>
