@@ -1,9 +1,11 @@
 import React from "react";
 import { withRouter } from "next/router";
-import Navbar from "../components/layouts/Navbar";
-import Sidebar from "../components/layouts/Sidebar";
-
+import Navbar from "@components/layouts/Navbar";
+import Sidebar from "@components/layouts/Sidebar";
 import { makeStyles } from "@material-ui/core";
+//redux
+import { useSelector } from "react-redux";
+import Redirect from "@utils/Redirect";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,6 +24,17 @@ const useStyles = makeStyles((theme) => ({
 
 const Admin = (props) => {
   const classes = useStyles();
+
+  const { isAuthenticated, user } = useSelector((state) => state.user);
+
+  if (!isAuthenticated) {
+    return <Redirect to="/auth/login" />;
+  }
+
+  if (user.role !== "admin") {
+    return <Redirect to="/403" />;
+  }
+
   return (
     <>
       <div className={classes.root}>
