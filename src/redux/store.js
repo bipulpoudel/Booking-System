@@ -27,7 +27,7 @@ const storage =
 const persistConfig = {
   key: "Pro",
   storage,
-  whitelist: ["userData"],
+  whitelist: ["user"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

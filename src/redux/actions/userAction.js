@@ -7,6 +7,7 @@ import {
   USER_LOGIN_SUCCESS,
   USER_LOGIN_REQUEST,
   USER_LOGIN_FAIL,
+  USER_LOAD_SUCCESS,
 } from "@redux/types";
 
 const config = {
@@ -25,12 +26,12 @@ export const loginUser = (formData) => async (dispatch) => {
 
     dispatch({
       type: USER_LOGIN_SUCCESS,
-      payload: response.data,
     });
+
+    dispatch({ type: USER_LOAD_SUCCESS, payload: response.data });
   } catch (err) {
     dispatch({
       type: USER_LOGIN_FAIL,
-      payload: err?.response?.data?.errors,
     });
 
     err?.response?.data?.errors.map((err) => toast.error(err.message));

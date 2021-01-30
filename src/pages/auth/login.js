@@ -19,6 +19,9 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "@redux/actions/userAction";
 
+//layouts imports
+import Auth from "@layouts/Auth";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -39,10 +42,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+function Login() {
   const classes = useStyles();
 
-  const { isLoading, errors } = useSelector((state) => state.userLogin);
+  const { isLoading } = useSelector((state) => state.userLogin);
 
   const { register, handleSubmit, errors: formErrors } = useForm();
 
@@ -108,3 +111,7 @@ export default function SignUp() {
     </Container>
   );
 }
+
+Login.layout = Auth;
+
+export default Login;
