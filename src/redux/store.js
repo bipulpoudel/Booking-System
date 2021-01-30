@@ -25,14 +25,14 @@ const storage =
     : createNoopStorage();
 
 const persistConfig = {
-  key: "Pro",
+  key: "Booking-System",
   storage,
   whitelist: ["user"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const makeStore = (context) => {
+const makeStore = () => {
   const bindMiddleware = (middleware) => {
     if (process.env.NODE_ENV !== "production") {
       const { composeWithDevTools } = require("redux-devtools-extension");

@@ -4,6 +4,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import { useDispatch } from "react-redux";
+import { USER_LOGOUT } from "@redux/types";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -17,6 +19,12 @@ const useStyles = makeStyles(() => ({
 export default function Navbar() {
   const classes = useStyles();
 
+  const dispatch = useDispatch();
+
+  const logoutHandler = () => {
+    dispatch({ type: USER_LOGOUT });
+  };
+
   return (
     <div className={classes.root}>
       <AppBar>
@@ -24,7 +32,9 @@ export default function Navbar() {
           <Typography variant="h6" className={classes.title}>
             Calendly
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" onClick={logoutHandler}>
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
