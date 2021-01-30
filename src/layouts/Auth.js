@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "next/router";
 import { useSelector } from "react-redux";
+import Redirect from "@utils/Redirect";
 
 const Auth = (props) => {
   const { isAuthenticated, isLoading, user } = useSelector(
@@ -12,7 +13,7 @@ const Auth = (props) => {
   }
 
   if (isAuthenticated) {
-    return <p>Logged In already</p>;
+    return <Redirect to="/admin" />;
   }
 
   return <>{props.children}</>;
