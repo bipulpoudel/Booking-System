@@ -1,28 +1,28 @@
 import {
-  ADD_DOCTOR_REQUEST,
-  ADD_DOCTOR_SUCCESS,
-  ADD_DOCTOR_FAIL,
-  GET_DOCTORS_REQUEST,
-  GET_DOCTORS_SUCCESS,
-  GET_DOCTORS_FAIL,
+  CREATE_PROFILE_REQUEST,
+  CREATE_PROFILE_SUCCESS,
+  CREATE_PROFILE_FAIL,
+  UPDATE_PROFILE_REQUEST,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_FAIL,
 } from "@redux/types";
 
-export const addDoctorReducer = (state = { isLoading: false }, action) => {
+export const createProfileReducer = (state = { isLoading: false }, action) => {
   const { type, payload } = action;
   switch (type) {
-    case ADD_DOCTOR_REQUEST:
+    case CREATE_PROFILE_REQUEST:
       return {
         ...state,
         isLoading: true,
       };
 
-    case ADD_DOCTOR_SUCCESS:
+    case CREATE_PROFILE_SUCCESS:
       return {
         ...state,
         isLoading: false,
       };
 
-    case ADD_DOCTOR_FAIL:
+    case CREATE_PROFILE_FAIL:
       return {
         ...state,
         isLoading: false,
@@ -33,26 +33,22 @@ export const addDoctorReducer = (state = { isLoading: false }, action) => {
   }
 };
 
-export const doctorListReducer = (
-  state = { isLoading: false, doctors: [] },
-  action
-) => {
+export const updateProfileReducer = (state = { isLoading: false }, action) => {
   const { type, payload } = action;
   switch (type) {
-    case GET_DOCTORS_REQUEST:
+    case UPDATE_PROFILE_REQUEST:
       return {
         ...state,
         isLoading: true,
       };
 
-    case GET_DOCTORS_SUCCESS:
+    case UPDATE_PROFILE_SUCCESS:
       return {
         ...state,
-        doctors: payload,
         isLoading: false,
       };
 
-    case GET_DOCTORS_FAIL:
+    case UPDATE_PROFILE_FAIL:
       return {
         ...state,
         isLoading: false,

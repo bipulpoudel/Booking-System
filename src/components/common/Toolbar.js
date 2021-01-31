@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Box, Button, makeStyles } from "@material-ui/core";
 import { useRouter } from "next/router";
 
@@ -33,10 +32,6 @@ const Toolbar = () => {
       </Box>
     </div>
   );
-};
-
-Toolbar.propTypes = {
-  className: PropTypes.string,
 };
 
 export default Toolbar;

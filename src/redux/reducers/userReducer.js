@@ -5,12 +5,13 @@ import {
   USER_LOAD_FAIL,
   USER_LOAD_SUCCESS,
   USER_LOAD_REQUEST,
+  USER_DETAIL_REQUEST,
+  USER_DETAIL_SUCCESS,
+  USER_DETAIL_FAIL,
+  UPDATE_USER_DETAILS,
 } from "@redux/types";
 
-export const userLoginReducer = (
-  state = { isLoading: false, errors: [] },
-  action
-) => {
+export const userLoginReducer = (state = { isLoading: false }, action) => {
   const { type, payload } = action;
   switch (type) {
     case USER_LOGIN_REQUEST:
@@ -29,7 +30,6 @@ export const userLoginReducer = (
       return {
         ...state,
         isLoading: false,
-        errors: payload,
       };
 
     default:
@@ -60,8 +60,46 @@ export const userReducer = (
 
     case USER_LOAD_FAIL:
       return {
+        ...state,
         isLoading: false,
-        errors: payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const userDetailReducer = (state = {}, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case USER_DETAIL_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+
+    case USER_DETAIL_SUCCESS:
+      return {
+        ...state,
+        user: payload.user,
+        isUpdate: payload.isUpdate,
+        isLoading: false,
+      };
+
+    case USER_DETAIL_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+      };
+
+    case UPDATE_USER_DETAILS:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          profile: payload,
+        },
+        isUpdate: true,
       };
 
     default:
