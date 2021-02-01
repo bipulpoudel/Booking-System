@@ -3,11 +3,12 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Button from "@components/common/Button";
 import Box from "@material-ui/core/Box";
+import DoctorCard from "@components/common/DoctorCard";
 
 export default function Index() {
   return (
-    <Container maxWidth="sm">
-      <Box my={4}>
+    <div style={{ backgroundColor: "#edeff2" }}>
+      <Container maxWidth="md">
         <Typography variant="h4" component="h1" gutterBottom>
           Booking System
         </Typography>
@@ -17,7 +18,14 @@ export default function Index() {
           text="Go to Dashboard"
           href="/auth/login"
         />
-      </Box>
-    </Container>
+        <Box my={4}>
+          <DoctorCard />
+          <DoctorCard />
+          <DoctorCard />
+          <DoctorCard />
+          <DoctorCard />
+        </Box>
+      </Container>
+    </div>
   );
 }
