@@ -1,6 +1,11 @@
 import { combineReducers } from "redux";
-import { userLoginReducer, userReducer } from "./userReducer";
-import { addDoctorReducer } from "./doctorReducer";
+import {
+  userLoginReducer,
+  userReducer,
+  userDetailReducer,
+} from "./userReducer";
+import { addDoctorReducer, doctorListReducer } from "./doctorReducer";
+import { createProfileReducer, updateProfileReducer } from "./profileReducer";
 
 //types
 import { USER_LOGOUT } from "@redux/types";
@@ -10,7 +15,11 @@ import { toast } from "react-toastify";
 const appReducer = combineReducers({
   userLogin: userLoginReducer,
   user: userReducer,
+  userDetail: userDetailReducer,
   addDoctor: addDoctorReducer,
+  doctorList: doctorListReducer,
+  createProfile: createProfileReducer,
+  updateProfile: updateProfileReducer,
 });
 
 //Root Reducer ot logout and cleat all the state from redux.

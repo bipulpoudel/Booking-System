@@ -1,27 +1,30 @@
-import React, { useState } from "react";
-import clsx from "clsx";
+import React, { useEffect } from "react";
+import { useRouter } from "next/router";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import {
-  Avatar,
-  Box,
-  Card,
-  Container,
-  Checkbox,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-  makeStyles,
-} from "@material-ui/core";
+
+//material ui core
+import IconButton from "@material-ui/core/IconButton";
+import Avatar from "@material-ui/core/Avatar";
+import Box from "@material-ui/core/Box";
+import Card from "@material-ui/core/Card";
+import Container from "@material-ui/core/Container";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core";
 
 import Admin from "@layouts/Admin";
-import customers from "@constants/doctors";
 import Toolbar from "@components/common/Toolbar";
+import { useDispatch, useSelector } from "react-redux";
+import { getDoctorsList } from "@redux/actions/doctorActions";
+
+//icons imports
+import EditIcon from "@material-ui/icons/Edit";
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
   avatar: {
     marginRight: theme.spacing(2),
   },
@@ -29,116 +32,75 @@ const useStyles = makeStyles((theme) => ({
 
 const doctors = () => {
   const classes = useStyles();
-  const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
 
-  const handleSelectAll = (event) => {
-    let newSelectedCustomerIds;
+  const router = useRouter();
 
-    if (event.target.checked) {
-      newSelectedCustomerIds = customers.map((customer) => customer.id);
-    } else {
-      newSelectedCustomerIds = [];
-    }
+  const dispatch = useDispatch();
 
-    setSelectedCustomerIds(newSelectedCustomerIds);
-  };
+  useEffect(() => {
+    dispatch(getDoctorsList());
+  }, []);
 
-  const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedCustomerIds.indexOf(id);
-    let newSelectedCustomerIds = [];
-
-    if (selectedIndex === -1) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(
-        selectedCustomerIds,
-        id
-      );
-    } else if (selectedIndex === 0) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(
-        selectedCustomerIds.slice(1)
-      );
-    } else if (selectedIndex === selectedCustomerIds.length - 1) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(
-        selectedCustomerIds.slice(0, -1)
-      );
-    } else if (selectedIndex > 0) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(
-        selectedCustomerIds.slice(0, selectedIndex),
-        selectedCustomerIds.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelectedCustomerIds(newSelectedCustomerIds);
-  };
+  const { isLoading, doctors } = useSelector((state) => state.doctorList);
 
   return (
     <Container maxWidth={false}>
       <Box mt={3}>
         <Toolbar />
-        <Card className={clsx(classes.root)}>
+        <Card>
           <PerfectScrollbar>
             <Box minWidth={1050}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={
-                          selectedCustomerIds.length === customers.length
-                        }
-                        color="primary"
-                        indeterminate={
-                          selectedCustomerIds.length > 0 &&
-                          selectedCustomerIds.length < customers.length
-                        }
-                        onChange={handleSelectAll}
-                      />
-                    </TableCell>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Email</TableCell>
-                    <TableCell>Location</TableCell>
-                    <TableCell>Phone</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {customers.map((customer) => (
-                    <TableRow
-                      hover
-                      key={customer.id}
-                      selected={selectedCustomerIds.indexOf(customer.id) !== -1}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={
-                            selectedCustomerIds.indexOf(customer.id) !== -1
-                          }
-                          onChange={(event) =>
-                            handleSelectOne(event, customer.id)
-                          }
-                          value="true"
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <Box alignItems="center" display="flex">
-                          <Avatar
-                            className={classes.avatar}
-                            src={customer.avatarUrl}
-                          >
-                            {customer.name}
-                          </Avatar>
-                          <Typography color="textPrimary" variant="body1">
-                            {customer.name}
-                          </Typography>
-                        </Box>
-                      </TableCell>
-                      <TableCell>{customer.email}</TableCell>
-                      <TableCell>
-                        {`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
-                      </TableCell>
-                      <TableCell>{customer.phone}</TableCell>
+              {isLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Email</TableCell>
+                      <TableCell>Phone</TableCell>
+                      <TableCell>Action</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHead>
+
+                  <TableBody>
+                    {doctors.map((doctor, index) => (
+                      <TableRow hover key={index}>
+                        <TableCell>
+                          <Box alignItems="center" display="flex">
+                            <Avatar
+                              className={classes.avatar}
+                              src={doctor.avatarUrl}
+                            >
+                              {doctor.name}
+                            </Avatar>
+                            <Typography color="textPrimary" variant="body2">
+                              {doctor.name}
+                            </Typography>
+                          </Box>
+                        </TableCell>
+                        <TableCell>{doctor.email}</TableCell>
+                        <TableCell>{doctor.type}</TableCell>
+                        <TableCell>
+                          <IconButton
+                            aria-label="delete"
+                            onClick={() =>
+                              router
+                                .push({
+                                  pathname: `${router.pathname}/[id]`,
+                                  query: { id: doctor._id },
+                                })
+                                .then()
+                            }
+                          >
+                            <EditIcon fontSize="small" />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
             </Box>
           </PerfectScrollbar>
         </Card>

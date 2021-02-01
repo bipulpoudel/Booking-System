@@ -7,13 +7,16 @@ import {
   ADD_DOCTOR_SUCCESS,
   ADD_DOCTOR_REQUEST,
   ADD_DOCTOR_FAIL,
+  GET_DOCTORS_REQUEST,
+  GET_DOCTORS_SUCCESS,
+  GET_DOCTORS_FAIL,
 } from "@redux/types";
 
 export const addDoctor = (formData) => async (dispatch) => {
   dispatch({ type: ADD_DOCTOR_REQUEST });
 
   try {
-    const response = await axios.post(
+    await axios.post(
       `${API_URL}/users/register`,
       JSON.stringify(formData),
       getConfig()
@@ -35,6 +38,28 @@ export const addDoctor = (formData) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: ADD_DOCTOR_FAIL,
+    });
+
+    err?.response?.data?.errors.map((message) => toast.error(message));
+  }
+};
+
+export const getDoctorsList = () => async (dispatch) => {
+  dispatch({ type: GET_DOCTORS_REQUEST });
+
+  try {
+    const response = await axios.get(
+      `${API_URL}/users/doctorList`,
+      getConfig()
+    );
+
+    dispatch({
+      type: GET_DOCTORS_SUCCESS,
+      payload: response.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_DOCTORS_FAIL,
     });
 
     err?.response?.data?.errors.map((message) => toast.error(message));
