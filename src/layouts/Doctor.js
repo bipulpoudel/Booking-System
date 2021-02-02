@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "next/router";
-import Navbar from "@components/layouts/admin/Navbar";
-import Sidebar from "@components/layouts/admin/Sidebar";
+import Navbar from "@components/layouts/doctor/Navbar";
+import Sidebar from "@components/layouts/doctor/Sidebar";
 import { makeStyles } from "@material-ui/core";
 //redux
 import { useSelector } from "react-redux";
@@ -22,18 +22,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Admin = (props) => {
+const Doctor = (props) => {
   const classes = useStyles();
-
-  const { isAuthenticated, user } = useSelector((state) => state.user);
-
-  if (!isAuthenticated) {
-    return <Redirect to="/auth/login" />;
-  }
-
-  if (user.role !== "admin") {
-    return <Redirect to="/403" />;
-  }
 
   return (
     <>
@@ -46,4 +36,4 @@ const Admin = (props) => {
   );
 };
 
-export default withRouter(Admin);
+export default withRouter(Doctor);
