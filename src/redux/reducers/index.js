@@ -6,6 +6,11 @@ import {
 } from "./userReducer";
 import { addDoctorReducer, doctorListReducer } from "./doctorReducer";
 import { createProfileReducer, updateProfileReducer } from "./profileReducer";
+import {
+  createTimelineReducer,
+  timelineDetailReducer,
+  updateTimelineReducer,
+} from "./timelineReducer";
 
 //types
 import { USER_LOGOUT } from "@redux/types";
@@ -20,6 +25,9 @@ const appReducer = combineReducers({
   doctorList: doctorListReducer,
   createProfile: createProfileReducer,
   updateProfile: updateProfileReducer,
+  createTimeline: createTimelineReducer,
+  updateTimeline: updateTimelineReducer,
+  timelineDetail: timelineDetailReducer,
 });
 
 //Root Reducer ot logout and cleat all the state from redux.
