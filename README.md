@@ -1,34 +1,57 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Authentication System
 
-First, run the development server:
+### All the roles
 
-```bash
-npm run dev
-# or
-yarn dev
+| Role   | Description  |
+| -----  | ------------ |
+| Doctor | doctor       |
+| Admin  |  admin       |
+
+### Role Access Folders
+
+All the access that roles has on folder structure:
+
+```
+├── Doctor
+│   ├── /pages/doctor
+├── Admin
+|   └── /pages/admin
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Note : There is no simple login for a user**
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### Auth credentials
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+1. admin login
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+   ```
+   email       :  bipul7poudel@gmail.com
+   password    :  12345678
+   ```
 
-## Learn More
+2. doctor login
 
-To learn more about Next.js, take a look at the following resources:
+   ```
+   email       :  admin2@admin.com
+   password    :  12345678
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### authorization impletementation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- route protection - UI part
 
-## Deploy on Vercel
+  ```
+  ├── Doctor
+  │   ├── /layouts/Doctor
+  ├── Admin
+  |   └── /layouts/Admin
+  ├── Auth Pages
+  |   └── /layouts/Auth
+  ```   
+  
+    1. Doctor Layout for all the pages doctor can access
+    2. Admin Layout for all the pages admin can access
+    3. Auth Layout for auth page redirect after logged in to system
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
