@@ -15,6 +15,7 @@ import Admin from "@layouts/Admin";
 import { useDispatch, useSelector } from "react-redux";
 import { userDetail } from "@redux/actions/userAction";
 import { createProfile, updateProfile } from "@redux/actions/profileActions";
+import { API_URL } from "@config/index";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -105,12 +106,19 @@ const details = () => {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <p>Select Image</p>
+                {user?.profile?.file && (
+                  <img
+                    src={API_URL + "/" + user?.profile?.file}
+                    style={{ width: 100, height: 100 }}
+                  />
+                )}
+
                 <TextField
-                  autoComplete="name"
                   type="file"
-                  name="name"
+                  name="file"
                   variant="outlined"
                   fullWidth
+                  inputRef={register}
                 />
               </Grid>
               <Grid item xs={6}>

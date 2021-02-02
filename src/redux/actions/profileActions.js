@@ -13,15 +13,21 @@ import {
   UPDATE_PROFILE_FAIL,
 } from "@redux/types";
 
-export const createProfile = (formData, userId) => async (dispatch) => {
+export const createProfile = (receivedData, userId) => async (dispatch) => {
   dispatch({ type: CREATE_PROFILE_REQUEST });
 
-  const body = JSON.stringify(formData);
+  const { file, type, contact, about } = receivedData;
+
+  const formData = new FormData();
+  formData.append("file", file[0]);
+  formData.append("type", type);
+  formData.append("contact", contact);
+  formData.append("about", about);
 
   try {
     const response = await axios.post(
       `${API_URL}/profiles/create/${userId}`,
-      body,
+      formData,
       getConfig()
     );
 
@@ -41,15 +47,21 @@ export const createProfile = (formData, userId) => async (dispatch) => {
   }
 };
 
-export const updateProfile = (formData, profileId) => async (dispatch) => {
+export const updateProfile = (receivedData, profileId) => async (dispatch) => {
   dispatch({ type: UPDATE_PROFILE_REQUEST });
 
-  const body = JSON.stringify(formData);
+  const { file, type, contact, about } = receivedData;
+
+  const formData = new FormData();
+  formData.append("file", file[0]);
+  formData.append("type", type);
+  formData.append("contact", contact);
+  formData.append("about", about);
 
   try {
     const response = await axios.put(
       `${API_URL}/profiles/update/${profileId}`,
-      body,
+      formData,
       getConfig()
     );
 
