@@ -25,6 +25,16 @@ const useStyles = makeStyles((theme) => ({
 const Doctor = (props) => {
   const classes = useStyles();
 
+  const { isAuthenticated, user } = useSelector((state) => state.user);
+
+  if (!isAuthenticated) {
+    return <Redirect to="/auth/login" />;
+  }
+
+  if (user.role !== "doctor") {
+    return <Redirect to="/403" />;
+  }
+
   return (
     <>
       <div className={classes.root}>

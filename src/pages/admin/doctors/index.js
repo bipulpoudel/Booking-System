@@ -23,6 +23,7 @@ import { getDoctorsList } from "@redux/actions/doctorActions";
 
 //icons imports
 import EditIcon from "@material-ui/icons/Edit";
+import { API_URL } from "@config/index";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -57,6 +58,7 @@ const doctors = () => {
                   <TableHead>
                     <TableRow>
                       <TableCell>Name</TableCell>
+                      <TableCell>Type</TableCell>
                       <TableCell>Email</TableCell>
                       <TableCell>Phone</TableCell>
                       <TableCell>Action</TableCell>
@@ -70,17 +72,16 @@ const doctors = () => {
                           <Box alignItems="center" display="flex">
                             <Avatar
                               className={classes.avatar}
-                              src={doctor.avatarUrl}
-                            >
-                              {doctor.name}
-                            </Avatar>
+                              src={API_URL + "/" + doctor?.profile?.file}
+                            ></Avatar>
                             <Typography color="textPrimary" variant="body2">
                               {doctor.name}
                             </Typography>
                           </Box>
                         </TableCell>
+                        <TableCell>{doctor.profile?.type}</TableCell>
                         <TableCell>{doctor.email}</TableCell>
-                        <TableCell>{doctor.type}</TableCell>
+                        <TableCell>{doctor.profile?.contact}</TableCell>
                         <TableCell>
                           <IconButton
                             aria-label="delete"
