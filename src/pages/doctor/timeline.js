@@ -1,131 +1,146 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
+import React, { useEffect, useMemo, useState } from "react";
 import Typography from "@material-ui/core/Typography";
-import { red } from "@material-ui/core/colors";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+
+import { useDispatch, useSelector } from "react-redux";
+//redux import
+import Doctor from "@layouts/Doctor";
+import Day from "@components/timeline/Day";
+import {
+  createTimeline,
+  timelineDetail,
+  updateTimeline,
+} from "@redux/actions/timelineActions";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
-  },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: "rotate(180deg)",
-  },
-  avatar: {
-    backgroundColor: red[500],
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
 }));
 
+let defaultValues = {
+  sunday: [],
+  monday: [],
+  tuesday: [],
+  wednesday: [],
+  thursday: [],
+  friday: [],
+  saturday: [],
+};
+
 const timeline = () => {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(timelineDetail());
+  }, []);
+
+  const { isLoading: loading, data, isUpdate } = useSelector(
+    (state) => state.timelineDetail
+  );
+
+  const { isLoading: updateLoading } = useSelector(
+    (state) => state.updateTimeline
+  );
+
+  const { isLoading } = useSelector((state) => state.createTimeline);
+
+  const [sunday, setSunday] = useState([]);
+  const [monday, setMonday] = useState([]);
+  const [tuesday, setTuesday] = useState([]);
+  const [wednesday, setWednesday] = useState([]);
+  const [thursday, setThursday] = useState([]);
+  const [friday, setFriday] = useState([]);
+  const [saturday, setSaturday] = useState([]);
+
+  useEffect(() => {
+    if (data) {
+      setSunday(data.sunday);
+      setMonday(data.monday);
+      setTuesday(data.tuesday);
+      setWednesday(data.wednesday);
+      setThursday(data.thursday);
+      setFriday(data.friday);
+      setSaturday(data.saturday);
+    }
+  }, [data]);
+
+  const onSubmit = () => {
+    const sendData = {
+      sunday,
+      monday,
+      tuesday,
+      wednesday,
+      thursday,
+      friday,
+      saturday,
+    };
+
+    if (isUpdate) {
+      dispatch(updateTimeline(sendData, data._id));
+    } else {
+      dispatch(createTimeline(sendData));
+    }
   };
 
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
-      />
-      <CardMedia
-        className={classes.media}
-        image="/static/images/cards/paella.jpg"
-        title="Paella dish"
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+    <Container component="main" maxWidth="xl">
+      <div className={classes.paper}>
+        <Typography component="h1" variant="h5">
+          Set your timeline which suits you
         </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and
-            set aside for 10 minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet
-            over medium-high heat. Add chicken, shrimp and chorizo, and cook,
-            stirring occasionally until lightly browned, 6 to 8 minutes.
-            Transfer shrimp to a large plate and set aside, leaving chicken and
-            chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes,
-            onion, salt and pepper, and cook, stirring often until thickened and
-            fragrant, about 10 minutes. Add saffron broth and remaining 4 1/2
-            cups chicken broth; bring to a boil.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and
-            peppers, and cook without stirring, until most of the liquid is
-            absorbed, 15 to 18 minutes. Reduce heat to medium-low, add reserved
-            shrimp and mussels, tucking them down into the rice, and cook again
-            without stirring, until mussels have opened and rice is just tender,
-            5 to 7 minutes more. (Discard any mussels that don’t open.)
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then
-            serve.
-          </Typography>
-        </CardContent>
-      </Collapse>
-    </Card>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <div>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={isLoading || updateLoading}
+              onClick={onSubmit}
+            >
+              {isLoading ? "Submitting..." : "Submit"}
+            </Button>
+
+            <Grid container spacing={3}>
+              <Grid item xs={4}>
+                <Day day="sunday" data={sunday} setValue={setSunday} />
+              </Grid>
+              <Grid item xs={4}>
+                <Day day="monday" data={monday} setValue={setMonday} />
+              </Grid>
+              <Grid item xs={4}>
+                <Day day="tuesday" data={tuesday} setValue={setTuesday} />
+              </Grid>
+              <Grid item xs={4}>
+                <Day day="wednesday" data={wednesday} setValue={setWednesday} />
+              </Grid>
+              <Grid item xs={4}>
+                <Day day="thursday" data={thursday} setValue={setThursday} />
+              </Grid>
+              <Grid item xs={4}>
+                <Day day="friday" data={friday} setValue={setFriday} />
+              </Grid>
+              <Grid item xs={4}>
+                <Day day="saturday" data={saturday} setValue={setSaturday} />
+              </Grid>
+            </Grid>
+          </div>
+        )}
+      </div>
+    </Container>
   );
 };
+
+timeline.layout = Doctor;
 
 export default timeline;
