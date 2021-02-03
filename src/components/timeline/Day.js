@@ -29,7 +29,7 @@ export default function Day({ day, data = [], setValue }) {
 
     newData.splice(index, 1);
 
-    setValue(newData);
+    setValue([...newData]);
   };
 
   return (

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import DayTimeline from "./DayTimeline";
-import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
