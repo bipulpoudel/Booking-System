@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DayTimeline = ({ day, date, month }) => {
+const DayTimeline = ({ day, date, month, data }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -23,41 +23,18 @@ const DayTimeline = ({ day, date, month }) => {
       <Typography variant="caption" display="block">
         {date} {month}
       </Typography>
-      <Button
-        className={classes.margin}
-        variant="outlined"
-        size="small"
-        color="primary"
-        disabled
-      >
-        Primary
-      </Button>
-      <Button
-        className={classes.margin}
-        variant="outlined"
-        size="small"
-        color="primary"
-        disabled
-      >
-        Primary
-      </Button>
-      <Button
-        className={classes.margin}
-        variant="outlined"
-        size="small"
-        color="primary"
-        disabled
-      >
-        Primary
-      </Button>
-      <Button
-        className={classes.margin}
-        variant="outlined"
-        size="small"
-        color="primary"
-      >
-        8: 80 PM
-      </Button>
+
+      {data?.map((time, index) => (
+        <Button
+          className={classes.margin}
+          variant="outlined"
+          size="small"
+          color="primary"
+          key={index}
+        >
+          {time.startTime}-{time.endTime}
+        </Button>
+      ))}
     </div>
   );
 };

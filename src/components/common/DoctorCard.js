@@ -6,6 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { API_URL } from "@config/index";
 import TimelineCard from "./TimelineCard";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DoctorCard = ({ data: { name, profile } }) => {
+const DoctorCard = ({ data: { name, profile, timeline } }) => {
   const classes = useStyles();
 
   return (
@@ -57,7 +58,7 @@ const DoctorCard = ({ data: { name, profile } }) => {
             </div>
           </div>
           <div className={classes.wrapper}>
-            <TimelineCard />
+            <TimelineCard timeline={timeline} />
           </div>
         </CardContent>
       </Card>

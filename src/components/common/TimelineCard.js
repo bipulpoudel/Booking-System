@@ -7,15 +7,17 @@ import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 
 import { GetDates } from "@utils/Dates";
 
-export default function TimelineCard() {
+const TimelineCard = ({ timeline }) => {
   const [showIndex, setShowIndex] = useState(0);
 
   let startDate = new Date();
-  let dates = GetDates(startDate, 7);
+  let dates = GetDates(startDate, 9);
 
-  let dates1 = dates.splice(0, 4);
+  let dates1 = dates.splice(0, 3);
 
   let dates2 = dates.splice(0, 3);
+
+  let dates3 = dates.splice(0, 3);
 
   return (
     <>
@@ -37,6 +39,7 @@ export default function TimelineCard() {
               date={date.date}
               month={date.month}
               key={index}
+              data={timeline[date.day.toLowerCase()]}
             />
           ))}
         </>
@@ -49,6 +52,21 @@ export default function TimelineCard() {
               date={date.date}
               month={date.month}
               key={index}
+              data={timeline[date.day.toLowerCase()]}
+            />
+          ))}
+        </>
+      )}
+
+      {showIndex === 2 && (
+        <>
+          {dates3.map((date, index) => (
+            <DayTimeline
+              day={date.day}
+              date={date.date}
+              month={date.month}
+              key={index}
+              data={timeline[date.day.toLowerCase()]}
             />
           ))}
         </>
@@ -58,7 +76,7 @@ export default function TimelineCard() {
         <IconButton
           color="primary"
           aria-label="Next"
-          disabled={showIndex === 1}
+          disabled={showIndex === 2}
           onClick={() => setShowIndex(showIndex + 1)}
         >
           <SkipNextIcon />
@@ -66,4 +84,6 @@ export default function TimelineCard() {
       </div>
     </>
   );
-}
+};
+
+export default TimelineCard;
