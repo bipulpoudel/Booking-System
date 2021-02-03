@@ -9,14 +9,9 @@ import {
 } from "@material-ui/core";
 
 import {
-  AlertCircle as AlertCircleIcon,
   BarChart as BarChartIcon,
-  Lock as LockIcon,
-  Settings as SettingsIcon,
-  ShoppingBag as ShoppingBagIcon,
-  User as UserIcon,
-  UserPlus as UserPlusIcon,
-  Users as UsersIcon,
+  Clock as ClockIcon,
+  Calendar as CalendarIcon,
 } from "react-feather";
 
 import SidebarItem from "./SidebarItem";
@@ -29,8 +24,13 @@ const items = [
   },
   {
     href: "/doctor/timeline",
-    icon: UsersIcon,
+    icon: ClockIcon,
     title: "Timeline",
+  },
+  {
+    href: "/doctor/events",
+    icon: CalendarIcon,
+    title: "Events",
   },
 ];
 

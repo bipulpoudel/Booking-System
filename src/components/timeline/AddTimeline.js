@@ -22,7 +22,9 @@ const AddTimeline = ({ onAdd }) => {
 
   const [endTime, setEndTime] = useState("");
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
+
     onAdd({
       startTime,
       endTime,
@@ -34,7 +36,7 @@ const AddTimeline = ({ onAdd }) => {
   };
 
   return (
-    <div className={classes.root}>
+    <form className={classes.root} onSubmit={onSubmit}>
       <TextField
         className={classes.margin}
         label="Start Time"
@@ -45,6 +47,7 @@ const AddTimeline = ({ onAdd }) => {
         inputProps={{
           step: 300,
         }}
+        required
         value={startTime}
         onChange={(e) => setStartTime(e.target.value)}
       />
@@ -58,6 +61,7 @@ const AddTimeline = ({ onAdd }) => {
         inputProps={{
           step: 300,
         }}
+        required
         value={endTime}
         onChange={(e) => setEndTime(e.target.value)}
       />
@@ -67,12 +71,11 @@ const AddTimeline = ({ onAdd }) => {
         size="small"
         variant="contained"
         color="primary"
-        type="button"
-        onClick={onSubmit}
+        type="submit"
       >
         Add
       </Button>
-    </div>
+    </form>
   );
 };
 

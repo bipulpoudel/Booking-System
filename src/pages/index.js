@@ -1,14 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Button from "@components/common/Button";
 import Box from "@material-ui/core/Box";
 import DoctorCard from "@components/common/DoctorCard";
+import { useDispatch, useSelector } from "react-redux";
+import { doctorList } from "@redux/actions/doctorActions";
 
-export default function Index() {
+const Index = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(doctorList());
+  }, []);
+
+  const { isLoading, doctors } = useSelector((state) => state.doctorList);
+
   return (
     <div style={{ backgroundColor: "#edeff2" }}>
-      <Container maxWidth="md">
+      <Container maxWidth="lg">
         <Typography variant="h4" component="h1" gutterBottom>
           Booking System
         </Typography>
@@ -19,13 +29,17 @@ export default function Index() {
           href="/auth/login"
         />
         <Box my={4}>
-          <DoctorCard />
-          <DoctorCard />
-          <DoctorCard />
-          <DoctorCard />
-          <DoctorCard />
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            doctors.map((doctor, index) => (
+              <DoctorCard key={index} data={doctor} />
+            ))
+          )}
         </Box>
       </Container>
     </div>
   );
-}
+};
+
+export default Index;

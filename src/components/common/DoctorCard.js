@@ -2,11 +2,10 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Box from "@material-ui/core/Box";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { API_URL } from "@config/index";
+import TimelineCard from "./TimelineCard";
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -15,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
   wrapper: {
     display: "flex",
+    flex: 1,
   },
   content: {
     marginLeft: theme.spacing(2),
@@ -24,43 +24,45 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DoctorCard() {
+const DoctorCard = ({ data: { name, profile } }) => {
   const classes = useStyles();
 
   return (
     <Box my={4}>
       <Card>
-        <CardActionArea>
-          <CardContent className={classes.cardContent}>
-            <div className={classes.wrapper}>
-              <img
-                src="https://source.unsplash.com/random"
-                className={classes.media}
-              />
-              <div className={classes.content}>
-                <Typography variant="h6" gutterBottom>
-                  Dra. Encarnación Antón Casas
-                </Typography>
-                <Typography variant="button" display="block" gutterBottom>
-                  Allergologist (Pediatric allergist)
-                </Typography>
-                <Typography variant="subtitle2" gutterBottom>
-                  +977 - 9847039524
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Lizards are a widespread group of squamate reptiles, with over
-                  6,000 species, ranging across all continents except Antarctica
-                </Typography>
-              </div>
+        <CardContent className={classes.cardContent}>
+          <div className={classes.wrapper}>
+            <img
+              src={API_URL + "/" + profile?.file}
+              className={classes.media}
+            />
+            <div className={classes.content}>
+              <Typography variant="h6" gutterBottom>
+                {name}
+              </Typography>
+              <Typography
+                variant="button"
+                display="block"
+                color="primary"
+                gutterBottom
+              >
+                {profile?.type}
+              </Typography>
+              <Typography variant="subtitle2" gutterBottom>
+                {profile?.contact}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                {profile?.about}
+              </Typography>
             </div>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary">
-            Book Doctor
-          </Button>
-        </CardActions>
+          </div>
+          <div className={classes.wrapper}>
+            <TimelineCard />
+          </div>
+        </CardContent>
       </Card>
     </Box>
   );
-}
+};
+
+export default DoctorCard;

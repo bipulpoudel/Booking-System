@@ -44,12 +44,36 @@ export const addDoctor = (formData) => async (dispatch) => {
   }
 };
 
+//doctor list for admin
 export const getDoctorsList = () => async (dispatch) => {
   dispatch({ type: GET_DOCTORS_REQUEST });
 
   try {
     const response = await axios.get(
       `${API_URL}/users/doctorList`,
+      getConfig()
+    );
+
+    dispatch({
+      type: GET_DOCTORS_SUCCESS,
+      payload: response.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_DOCTORS_FAIL,
+    });
+
+    err?.response?.data?.errors.map((message) => toast.error(message));
+  }
+};
+
+//doctor list
+export const doctorList = () => async (dispatch) => {
+  dispatch({ type: GET_DOCTORS_REQUEST });
+
+  try {
+    const response = await axios.get(
+      `${API_URL}/users/doctor/list`,
       getConfig()
     );
 
