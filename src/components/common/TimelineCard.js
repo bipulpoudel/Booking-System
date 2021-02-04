@@ -6,7 +6,7 @@ import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 
 import { GetDates } from "@utils/Dates";
 
-const TimelineCard = ({ timeline }) => {
+const TimelineCard = ({ timeline, doctorId }) => {
   const [showIndex, setShowIndex] = useState(0);
 
   let startDate = new Date();
@@ -39,6 +39,7 @@ const TimelineCard = ({ timeline }) => {
               month={date.month}
               key={index}
               data={timeline[date.day.toLowerCase()]}
+              doctorId={doctorId}
             />
           ))}
         </>
@@ -52,6 +53,7 @@ const TimelineCard = ({ timeline }) => {
               month={date.month}
               key={index}
               data={timeline[date.day.toLowerCase()]}
+              doctorId={doctorId}
             />
           ))}
         </>
@@ -66,6 +68,7 @@ const TimelineCard = ({ timeline }) => {
               month={date.month}
               key={index}
               data={timeline[date.day.toLowerCase()]}
+              doctorId={doctorId}
             />
           ))}
         </>

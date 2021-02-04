@@ -1,95 +1,96 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import { useForm } from "react-hook-form";
+import Button from "@material-ui/core/Button";
+import { useDispatch } from "react-redux";
 
-export default function DetailForm() {
+const useStyles = makeStyles((theme) => ({
+  buttons: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  button: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1),
+  },
+}));
+
+export default function DetailForm({ handleNext }) {
+  const classes = useStyles();
+
+  const { register, handleSubmit, errors: formErrors } = useForm();
+
+  const dispatch = useDispatch();
+
+  const onSubmit = (data) => {
+    dispatch({ type: "ADD_USER_DETAILS", payload: data });
+
+    handleNext();
+  };
+
   return (
-    <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Details Form
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="firstName"
-            name="firstName"
-            label="First name"
-            fullWidth
-            autoComplete="given-name"
-          />
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <React.Fragment>
+        <Typography variant="h6" gutterBottom>
+          Details Form
+        </Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <TextField
+              name="name"
+              label="Full name"
+              fullWidth
+              variant="outlined"
+              inputRef={register({
+                required: "Name is a required field",
+              })}
+              error={formErrors?.name && true}
+              helperText={formErrors?.name?.message}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              name="number"
+              label="Telephone Number"
+              fullWidth
+              variant="outlined"
+              inputRef={register({
+                required: "Number is a required field",
+              })}
+              error={formErrors?.number && true}
+              helperText={formErrors?.number?.message}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              name="purpose"
+              label="Purpose of visit"
+              fullWidth
+              multiline
+              rows={4}
+              variant="outlined"
+              inputRef={register({
+                required: "Purpose of visit is a required field",
+              })}
+              error={formErrors?.purpose && true}
+              helperText={formErrors?.purpose?.message}
+            />
+          </Grid>
+          <div className={classes.buttons}>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              type="submit"
+            >
+              Next
+            </Button>
+          </div>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="lastName"
-            name="lastName"
-            label="Last name"
-            fullWidth
-            autoComplete="family-name"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="address1"
-            name="address1"
-            label="Address line 1"
-            fullWidth
-            autoComplete="shipping address-line1"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="address2"
-            name="address2"
-            label="Address line 2"
-            fullWidth
-            autoComplete="shipping address-line2"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="city"
-            name="city"
-            label="City"
-            fullWidth
-            autoComplete="shipping address-level2"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            id="state"
-            name="state"
-            label="State/Province/Region"
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="zip"
-            name="zip"
-            label="Zip / Postal code"
-            fullWidth
-            autoComplete="shipping postal-code"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="country"
-            name="country"
-            label="Country"
-            fullWidth
-            autoComplete="shipping country"
-          />
-        </Grid>
-      </Grid>
-    </React.Fragment>
+      </React.Fragment>
+    </form>
   );
 }

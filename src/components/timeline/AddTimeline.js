@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import Switch from "@material-ui/core/Switch";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,12 +24,15 @@ const AddTimeline = ({ onAdd }) => {
 
   const [endTime, setEndTime] = useState("");
 
+  const [isPaid, setIsPaid] = useState(false);
+
   const onSubmit = (e) => {
     e.preventDefault();
 
     onAdd({
       startTime,
       endTime,
+      isPaid,
     });
 
     setStartTime("");
@@ -64,6 +69,16 @@ const AddTimeline = ({ onAdd }) => {
         required
         value={endTime}
         onChange={(e) => setEndTime(e.target.value)}
+      />
+
+      <FormControlLabel
+        control={
+          <Switch
+            checked={isPaid}
+            onChange={(e) => setIsPaid(e.target.checked)}
+          />
+        }
+        label="Paid Event"
       />
 
       <Button
