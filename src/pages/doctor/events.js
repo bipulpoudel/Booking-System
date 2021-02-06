@@ -6,14 +6,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import Doctor from "@layouts/Doctor";
 import { getEvents } from "../../../api/event";
 
-import { NumberasMonth } from "@utils/Dates";
-
 const localizer = momentLocalizer(moment);
-
-function toTimestamp(strDate) {
-  var datum = Date.parse(strDate);
-  return datum / 1000;
-}
 
 const events = () => {
   const [loading, setLoading] = useState(false);
