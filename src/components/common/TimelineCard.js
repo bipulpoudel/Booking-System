@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import DayTimeline from "./DayTimeline";
-import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 
 import { GetDates } from "@utils/Dates";
 
-const TimelineCard = ({ timeline }) => {
+const TimelineCard = ({ timeline, doctorId }) => {
   const [showIndex, setShowIndex] = useState(0);
 
   let startDate = new Date();
@@ -40,6 +39,8 @@ const TimelineCard = ({ timeline }) => {
               month={date.month}
               key={index}
               data={timeline[date.day.toLowerCase()]}
+              doctorId={doctorId}
+              timeline={timeline}
             />
           ))}
         </>
@@ -53,6 +54,8 @@ const TimelineCard = ({ timeline }) => {
               month={date.month}
               key={index}
               data={timeline[date.day.toLowerCase()]}
+              doctorId={doctorId}
+              timeline={timeline}
             />
           ))}
         </>
@@ -67,6 +70,8 @@ const TimelineCard = ({ timeline }) => {
               month={date.month}
               key={index}
               data={timeline[date.day.toLowerCase()]}
+              doctorId={doctorId}
+              timeline={timeline}
             />
           ))}
         </>

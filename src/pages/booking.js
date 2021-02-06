@@ -12,7 +12,6 @@ import Typography from "@material-ui/core/Typography";
 //components
 import DetailForm from "@components/booking/DetailForm";
 import TimingForm from "@components/booking/TimingForm";
-import ReviewForm from "@components/booking/ReviewForm";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -41,30 +40,9 @@ const useStyles = makeStyles((theme) => ({
   stepper: {
     padding: theme.spacing(3, 0, 5),
   },
-  buttons: {
-    display: "flex",
-    justifyContent: "flex-end",
-  },
-  button: {
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1),
-  },
 }));
 
-const steps = ["Basic Details", "Select Timeline", "Review your booking"];
-
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <DetailForm />;
-    case 1:
-      return <TimingForm />;
-    case 2:
-      return <ReviewForm />;
-    default:
-      throw new Error("Unknown step");
-  }
-}
+const steps = ["Basic Details", "Select Timeline"];
 
 export default function Booking() {
   const classes = useStyles();
@@ -77,6 +55,17 @@ export default function Booking() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <DetailForm handleNext={handleNext} />;
+      case 1:
+        return <TimingForm handleBack={handleBack} />;
+      default:
+        throw new Error("Unknown step");
+    }
+  }
 
   return (
     <div style={{ backgroundColor: "#edeff2", height: "100vh" }}>
@@ -112,24 +101,7 @@ export default function Booking() {
                 </Typography>
               </React.Fragment>
             ) : (
-              <React.Fragment>
-                {getStepContent(activeStep)}
-                <div className={classes.buttons}>
-                  {activeStep !== 0 && (
-                    <Button onClick={handleBack} className={classes.button}>
-                      Back
-                    </Button>
-                  )}
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? "Place order" : "Next"}
-                  </Button>
-                </div>
-              </React.Fragment>
+              <React.Fragment>{getStepContent(activeStep)}</React.Fragment>
             )}
           </React.Fragment>
         </Paper>

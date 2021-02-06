@@ -1,61 +1,92 @@
-import React from "react";
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import Button from "@material-ui/core/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { bookEvent } from "@api/event";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
-export default function TimingForm() {
+const useStyles = makeStyles((theme) => ({
+  wrapper: {
+    display: "flex",
+    flex: 1,
+  },
+  margin: {
+    margin: theme.spacing(1),
+  },
+}));
+
+export default function TimingForm({ handleBack }) {
+  const classes = useStyles();
+
+  const dispatch = useDispatch();
+
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
+
+  const { time, date, month, user_details, doctor } = useSelector(
+    (state) => state.bookReducer
+  );
+
+  const onSubmit = async () => {
+    setLoading(true);
+
+    await bookEvent({
+      timeline: JSON.stringify(time),
+      date,
+      month,
+      user_details: JSON.stringify(user_details),
+      doctor,
+    });
+
+    setLoading(false);
+
+    toast.success("Application Completed");
+
+    router.push("/").then();
+
+    dispatch({ type: "ADD_EVENTS_SUCCESS" });
+  };
+
   return (
-    <React.Fragment>
+    <form>
       <Typography variant="h6" gutterBottom>
-        Payment method
+        Selected Date
       </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
-            id="cardName"
-            label="Name on card"
-            fullWidth
-            autoComplete="cc-name"
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
-            id="cardNumber"
-            label="Card number"
-            fullWidth
-            autoComplete="cc-number"
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
-            id="expDate"
-            label="Expiry date"
-            fullWidth
-            autoComplete="cc-exp"
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
-            id="cvv"
-            label="CVV"
-            helperText="Last three digits on signature strip"
-            fullWidth
-            autoComplete="cc-csc"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveCard" value="yes" />}
-            label="Remember credit card details for next time"
-          />
-        </Grid>
-      </Grid>
-    </React.Fragment>
+
+      <p>
+        {date}-{month}-2021
+      </p>
+
+      <p>
+        {time.startTime} - {time.endTime}
+      </p>
+
+      <FormControlLabel
+        control={
+          <Checkbox color="secondary" name="rules" checked={true} required />
+        }
+        label="I accept all the rules and regulations"
+      />
+
+      <div className={classes.margin}>
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          disabled={loading}
+          onClick={onSubmit}
+        >
+          {loading ? "Submitting" : "Submit"}
+        </Button>
+        <Button type="button" color="primary" onClick={handleBack}>
+          Back
+        </Button>
+      </div>
+    </form>
   );
 }

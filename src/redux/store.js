@@ -27,7 +27,7 @@ const storage =
 const persistConfig = {
   key: "Booking-System",
   storage,
-  whitelist: ["user"],
+  whitelist: ["user", "bookReducer"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

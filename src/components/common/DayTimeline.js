@@ -1,7 +1,9 @@
 import React from "react";
+import { useRouter } from "next/router";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,8 +15,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DayTimeline = ({ day, date, month, data }) => {
+const DayTimeline = ({ day, date, month, data, doctorId, timeline }) => {
   const classes = useStyles();
+
+  const dispatch = useDispatch();
+
+  const router = useRouter();
+
+  const bookEvent = (time) => {
+    dispatch({
+      type: "ADD_EVENTS_DETAILS",
+      payload: {
+        day,
+        date,
+        month,
+        time,
+        doctor: doctorId,
+        timeline,
+      },
+    });
+
+    router.push("/booking");
+  };
+
   return (
     <div className={classes.root}>
       <Typography variant="button" display="block">
@@ -31,6 +54,7 @@ const DayTimeline = ({ day, date, month, data }) => {
           size="small"
           color="primary"
           key={index}
+          onClick={() => bookEvent(time)}
         >
           {time.startTime}-{time.endTime}
         </Button>

@@ -12,6 +12,8 @@ import {
   updateTimelineReducer,
 } from "./timelineReducer";
 
+import { bookReducer } from "./bookingReducer";
+
 //types
 import { USER_LOGOUT } from "@redux/types";
 import storage from "redux-persist/lib/storage";
@@ -28,6 +30,7 @@ const appReducer = combineReducers({
   createTimeline: createTimelineReducer,
   updateTimeline: updateTimelineReducer,
   timelineDetail: timelineDetailReducer,
+  bookReducer: bookReducer,
 });
 
 //Root Reducer ot logout and cleat all the state from redux.
