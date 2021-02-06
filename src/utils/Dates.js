@@ -1,8 +1,8 @@
 export const GetDates = (startDate, daysToAdd) => {
-  var aryDates = [];
+  let aryDates = [];
 
-  for (var i = 0; i <= daysToAdd; i++) {
-    var currentDate = new Date();
+  for (let i = 0; i <= daysToAdd; i++) {
+    let currentDate = new Date();
     currentDate.setDate(startDate.getDate() + i);
     aryDates.push({
       day: DayAsString(currentDate.getDay()),
@@ -15,8 +15,7 @@ export const GetDates = (startDate, daysToAdd) => {
 };
 
 function MonthAsString(monthIndex) {
-  var d = new Date();
-  var month = new Array();
+  let month = new Array();
   month[0] = "January";
   month[1] = "February";
   month[2] = "March";
@@ -34,7 +33,7 @@ function MonthAsString(monthIndex) {
 }
 
 function DayAsString(dayIndex) {
-  var weekdays = new Array(7);
+  let weekdays = new Array(7);
   weekdays[0] = "Sunday";
   weekdays[1] = "Monday";
   weekdays[2] = "Tuesday";
@@ -45,3 +44,22 @@ function DayAsString(dayIndex) {
 
   return weekdays[dayIndex];
 }
+
+export const NumberasMonth = (monthName) => {
+  let month = new Array();
+
+  month[0] = "January";
+  month[1] = "February";
+  month[2] = "March";
+  month[3] = "April";
+  month[4] = "May";
+  month[5] = "June";
+  month[6] = "July";
+  month[7] = "August";
+  month[8] = "September";
+  month[9] = "October";
+  month[10] = "November";
+  month[11] = "December";
+
+  return month.indexOf(monthName);
+};

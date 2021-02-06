@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DayTimeline = ({ day, date, month, data, doctorId }) => {
+const DayTimeline = ({ day, date, month, data, doctorId, timeline }) => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -31,6 +31,7 @@ const DayTimeline = ({ day, date, month, data, doctorId }) => {
         month,
         time,
         doctor: doctorId,
+        timeline,
       },
     });
 

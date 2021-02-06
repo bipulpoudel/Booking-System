@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import Button from "@material-ui/core/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   buttons: {
@@ -21,7 +21,11 @@ const useStyles = makeStyles((theme) => ({
 export default function DetailForm({ handleNext }) {
   const classes = useStyles();
 
-  const { register, handleSubmit, errors: formErrors } = useForm();
+  const { user_details } = useSelector((state) => state.bookReducer);
+
+  const { register, handleSubmit, errors: formErrors } = useForm({
+    defaultValues: user_details,
+  });
 
   const dispatch = useDispatch();
 

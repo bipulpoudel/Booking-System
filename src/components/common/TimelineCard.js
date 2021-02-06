@@ -40,6 +40,7 @@ const TimelineCard = ({ timeline, doctorId }) => {
               key={index}
               data={timeline[date.day.toLowerCase()]}
               doctorId={doctorId}
+              timeline={timeline}
             />
           ))}
         </>
@@ -54,6 +55,7 @@ const TimelineCard = ({ timeline, doctorId }) => {
               key={index}
               data={timeline[date.day.toLowerCase()]}
               doctorId={doctorId}
+              timeline={timeline}
             />
           ))}
         </>
@@ -69,6 +71,7 @@ const TimelineCard = ({ timeline, doctorId }) => {
               key={index}
               data={timeline[date.day.toLowerCase()]}
               doctorId={doctorId}
+              timeline={timeline}
             />
           ))}
         </>

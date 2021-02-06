@@ -6,7 +6,6 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { API_URL } from "@config/index";
 import TimelineCard from "./TimelineCard";
-import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   media: {

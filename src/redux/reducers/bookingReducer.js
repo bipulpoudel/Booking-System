@@ -15,6 +15,9 @@ export const bookReducer = (state = { user_details: {} }, action) => {
         ...payload,
       };
 
+    case "ADD_EVENTS_SUCCESS":
+      return {};
+
     default:
       return state;
   }
