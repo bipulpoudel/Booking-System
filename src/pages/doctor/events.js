@@ -4,7 +4,7 @@ import moment from "moment";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import Doctor from "@layouts/Doctor";
-import { getEvents } from "../../../api/event";
+import { getEvents } from "@api/event";
 
 const localizer = momentLocalizer(moment);
 

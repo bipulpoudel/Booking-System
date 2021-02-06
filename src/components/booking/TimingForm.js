@@ -5,7 +5,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { bookEvent } from "../../../api/event";
+import { bookEvent } from "@api/event";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
