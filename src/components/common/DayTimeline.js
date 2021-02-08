@@ -33,14 +33,14 @@ const DayTimeline = ({ day, date, month, data, doctorId, timeline }) => {
   useEffect(() => {
     const fetchEvents = async () => {
       setLoading(true);
-      let events = await getEvents();
+      let data = await getEvents();
 
-      setEvents(events);
+      setEvents(data);
 
       setLoading(false);
 
       for (let i = 0; i < events.length; i++) {
-        if (events[i].date == date) {
+        if (events[i].date == date && events[i].month === month) {
           setFound(true);
           break;
         }
