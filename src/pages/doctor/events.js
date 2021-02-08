@@ -5,13 +5,34 @@ import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import Doctor from "@layouts/Doctor";
 import { getEvents } from "@api/event";
+import BookingModal from "@components/booking/BookingModal";
 
 const localizer = momentLocalizer(moment);
 
 const events = () => {
   const [loading, setLoading] = useState(false);
 
+  const [refresh, setRefresh] = useState(false);
+
   const [events, setEvents] = useState([]);
+
+  const [selectedEvent, setSelectedEvent] = useState({});
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = async (data) => {
+    await setSelectedEvent(data);
+
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const refreshData = () => {
+    setRefresh(!refresh);
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -25,7 +46,7 @@ const events = () => {
     };
 
     getData();
-  }, []);
+  }, [refresh]);
 
   const showEvents = (data) => {
     let returnData = [];
@@ -39,8 +60,13 @@ const events = () => {
 
       returnData.push({
         title: user_details.purpose,
+        date: d.date,
+        month: d.month,
+        timeline: timeline,
         start: new Date(`${d.month} ${d.date}, 2021 ${timeline.startTime}`),
         end: new Date(`${d.month} ${d.date}, 2021 ${timeline.endTime}`),
+        id: d._id,
+        user_details: user_details,
       });
     });
 
@@ -58,9 +84,15 @@ const events = () => {
           defaultView="month"
           events={showEvents(events)}
           style={{ height: "100vh" }}
-          onDoubleClickEvent={() => alert("Test")}
+          onDoubleClickEvent={handleClickOpen}
         />
       )}
+      <BookingModal
+        open={open}
+        handleClose={handleClose}
+        selectedEvent={selectedEvent}
+        refreshData={refreshData}
+      />
     </div>
   );
 };

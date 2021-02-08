@@ -28,11 +28,6 @@ const items = [
     title: "Timeline",
   },
   {
-    href: "/doctor/manual-timeline",
-    icon: ClockIcon,
-    title: "Manual Timeline",
-  },
-  {
     href: "/doctor/events",
     icon: CalendarIcon,
     title: "Events",
