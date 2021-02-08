@@ -24,3 +24,17 @@ export const getEvents = async () => {
     console.log(error.response);
   }
 };
+
+export const updateEvent = async (formData, eventId) => {
+  try {
+    const response = await axios.put(
+      `${API_URL}/booking/update/${eventId}`,
+      JSON.stringify(formData),
+      getConfig()
+    );
+
+    return response.data;
+  } catch (error) {
+    console.log(error.response);
+  }
+};
