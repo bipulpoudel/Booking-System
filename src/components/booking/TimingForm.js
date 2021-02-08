@@ -63,7 +63,7 @@ export default function TimingForm({ handleBack }) {
       </p>
 
       <p>
-        {time.startTime} - {time.endTime}
+        {time?.startTime} - {time?.endTime}
       </p>
 
       <FormControlLabel
