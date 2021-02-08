@@ -24,7 +24,15 @@ const BookingModal = ({
   selectedEvent = {},
   refreshData,
 }) => {
-  const { register, handleSubmit, errors: formErrors, control } = useForm();
+  const {
+    register,
+    handleSubmit,
+    errors: formErrors,
+    control,
+    formState,
+  } = useForm();
+
+  const { isDirty } = formState;
 
   const [loading, setLoading] = useState(false);
 
@@ -171,7 +179,7 @@ const BookingModal = ({
             variant="contained"
             color="primary"
             type="submit"
-            disabled={loading}
+            disabled={loading || !isDirty}
           >
             {loading ? "Loading..." : "Submit"}
           </Button>

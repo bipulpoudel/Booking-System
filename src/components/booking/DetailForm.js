@@ -57,6 +57,19 @@ export default function DetailForm({ handleNext }) {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              name="email"
+              label="Email"
+              fullWidth
+              variant="outlined"
+              inputRef={register({
+                required: "Email is a required field",
+              })}
+              error={formErrors?.email && true}
+              helperText={formErrors?.email?.message}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
               name="number"
               label="Telephone Number"
               fullWidth
